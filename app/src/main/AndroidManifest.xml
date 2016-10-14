@@ -19,6 +19,10 @@
         <receiver
             android:name=".AlarmReceiver"
             android:enabled="true"
+            android:exported="true" />
+        <receiver
+            android:name=".BootCompleteReceiver"
+            android:enabled="true"
             android:exported="true"></receiver>
     </application>
 
