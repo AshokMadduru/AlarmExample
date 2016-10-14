@@ -24,6 +24,11 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/start_inexact_repeating_alarm_text"
+        android:id="@+id/start_inexact_alarm"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/stop_alarm_text"
         android:id="@+id/stop_alarm_button"/>
 </LinearLayout>

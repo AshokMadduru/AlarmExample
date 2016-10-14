@@ -22,6 +22,7 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
     private Button startAlarmButton;
     private Button stopAlarmButton;
     private Button startRepeatingAlarmButton;
+    private Button startInExactRepeatingAlarmButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +36,11 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
         startAlarmButton = (Button) findViewById(R.id.start_alarm_button);
         stopAlarmButton = (Button) findViewById(R.id.stop_alarm_button);
         startRepeatingAlarmButton = (Button) findViewById(R.id.start_repeating_alarm_button);
+        startInExactRepeatingAlarmButton = (Button) findViewById(R.id.start_inexact_alarm);
         startAlarmButton.setOnClickListener(this);
         stopAlarmButton.setOnClickListener(this);
         startRepeatingAlarmButton.setOnClickListener(this);
+        startInExactRepeatingAlarmButton.setOnClickListener(this);
     }
     /**
      * initialize Alarm Manager
@@ -59,6 +62,9 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.start_repeating_alarm_button:
                 setRepeatingAlarm();
+                break;
+            case R.id.start_inexact_alarm:
+                setInExactRepeatingAlarm();
                 break;
         }
     }
@@ -84,13 +90,22 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
         }
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 2);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
     }
 
 
+    /**
+     * set inexact repeating alarm
+     */
     private void setInExactRepeatingAlarm() {
-
+        if (alarmManager == null) {
+            initializeAlarmManager();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 2);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                1000*60*2, pendingIntent);
     }
 
     /**
