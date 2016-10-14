@@ -2,8 +2,10 @@ package com.shok.alarmexample;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 
 import java.util.Calendar;
 
@@ -25,6 +27,13 @@ public class Alarm {
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(context, PENDING_INTENT_REQUEST_CODE, intent, 0);
+
+        ComponentName receiver = new ComponentName(context, BootCompleteReceiver.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
     }
 
     /**
@@ -74,5 +83,12 @@ public class Alarm {
             initializeAlarmManager(context);
         }
         alarmManager.cancel(pendingIntent);
+
+        ComponentName receiver = new ComponentName(context, BootCompleteReceiver.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
     }
 }
