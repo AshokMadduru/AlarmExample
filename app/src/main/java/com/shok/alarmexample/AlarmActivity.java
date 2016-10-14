@@ -21,6 +21,7 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
 
     private Button startAlarmButton;
     private Button stopAlarmButton;
+    private Button startRepeatingAlarmButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +34,10 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
     private void intializeViewsAndSetClickListeners() {
         startAlarmButton = (Button) findViewById(R.id.start_alarm_button);
         stopAlarmButton = (Button) findViewById(R.id.stop_alarm_button);
+        startRepeatingAlarmButton = (Button) findViewById(R.id.start_repeating_alarm_button);
         startAlarmButton.setOnClickListener(this);
         stopAlarmButton.setOnClickListener(this);
+        startRepeatingAlarmButton.setOnClickListener(this);
     }
     /**
      * initialize Alarm Manager
@@ -53,6 +56,9 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.stop_alarm_button:
                 stopAlarm();
+                break;
+            case R.id.start_repeating_alarm_button:
+                setRepeatingAlarm();
                 break;
         }
     }
@@ -73,7 +79,13 @@ public class AlarmActivity extends AppCompatActivity implements View.OnClickList
      * Start alarm at specified time and repeat it after some interval
      */
     private void setRepeatingAlarm() {
-
+        if (alarmManager == null) {
+            initializeAlarmManager();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 2);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
     }
 
 

@@ -33,7 +33,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                                 R.color.colorPrimary))
                         .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
                                 R.mipmap.ic_launcher))
-                        .setOngoing(true)
                         .setContentTitle(context.getString(R.string.app_name))
                         .setContentText(context.getString(R.string.notification_text))
                         .setCategory(android.app.Notification.CATEGORY_REMINDER);
